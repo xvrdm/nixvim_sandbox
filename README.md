@@ -1,17 +1,27 @@
-# Nixvim template
+# Nixvim with molten/quarto
 
-This template gives you a good starting point for configuring nixvim standalone.
+In bash,
 
-## Configuring
+```sh
+# Active nix shell (to get access to python)
+nix-shell shell.nix
 
-To start configuring, just add or modify the nix files in `./config`.
-If you add a new configuration file, remember to add it to the
-[`config/default.nix`](./config/default.nix) file
+# Create a venv
+python -m venv myvenv
 
-## Testing your new configuration
+# Install jupyter/jupytext dependencies
+python -m pip install -r requirements.txt
 
-To test your configuration simply run the following command
+# create a kernel
+ipykernel install --prefix=./myvenv --name 'myvenv'
 
+# try nixvim
+nix run .# -- test.qmd
 ```
-nix run .
-```
+
+Then in nvim
+
+1. (On first usage) `:UpdateRemotePlugins` 
+2. `:MoltenInit`
+3. `:MoltenInfo` 
+4. `:MoltenEvaluateLine` 
